@@ -22,7 +22,7 @@ const authRoute=require("./routes/google-auth");
 const cartRoutes = require('./routes/cart');
 const paymentRoutes = require('./routes/payment');
 const profileRoute=require("./routes/profile");
-const adminRoutes= require("./routes/Admin"); 
+const adminRoutes= require("./routes/admin"); 
 const AddressRoute=require("./routes/Address");
 const{checkTokenForUser,requireLogin}=require("./middlewares/authentication")
 
