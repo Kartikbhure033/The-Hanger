@@ -1,0 +1,180 @@
+
+/* shopping.css */
+/* Reset & Global */
+:root {
+    --primary-color: #FF6B00;
+    --bg-light: #F4F6F8;
+    --bg-white: #FFFFFF;
+    --border-color: #E0E0E0;
+    --text-dark: #333333;
+    --text-muted: #6B7280;
+    --radius: 8px;
+    --spacing: 16px;
+    --font: 'Poppins', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    color: var(--text-dark);
+    background: var(--bg-light);
+    min-height: 100vh;
+  }
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-white);
+    padding: var(--spacing);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .navbar .brand {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  .navbar .menu {
+    position: relative;
+  }
+  .navbar .menu-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--text-muted);
+  }
+  .navbar .dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-height: 240px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+  }
+  .navbar .dropdown li {
+    padding: 8px 16px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: var(--text-dark);
+    transition: background 0.2s;
+  }
+  .navbar .dropdown li:hover {
+    background: var(--bg-light);
+    color: var(--primary-color);
+  }
+  .menu-btn:focus + .dropdown,
+  .dropdown:hover {
+    display: block;
+  }
+/* Main Layout */
+.main-container { padding: 2rem 0; width: 100%; }
+.shop-header { display: flex; justify-content: space-between; align-items: center; margin: 0 2rem 2rem; }
+
+.filter-sort label { margin-right: 0.5rem; }
+.sort-select { padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; }
+
+.conta{
+    height: 120vh;
+    width: 100%;
+    background-color: white;
+}
+.conta h1{
+    height: 30vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-family: myfont;
+}
+/* Grid: always 4 columns */
+.NewItems {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 40px 100px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Force all cards to the same height */
+  .cloth1 {
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Fixed height so all cards match */
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+  }
+  
+  .cloth1:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Image covers its box without stretching */
+  .cloth-in img {
+    width: 100%;
+    height: 220px;           
+    object-fit: cover;       
+    border-radius: 15px;     /* <-- change from `15px 15px 0 0` to this */
+    background-color: #eee;
+  }
+  
+  /* Text & buttons sit below the image, flex grow to fill */
+  .cloth-in {
+    flex: 1;                 /* push footer to bottom if needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .cloth-in p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;       /* <-- add this */
+  }
+  .cloth-in .description {
+    font-size: 16px;
+    font-weight:100;
+    color: #333;
+    text-align:center;       /* <-- add this */
+  }
+  .cloth-in span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .cloth-in span a {
+    background-color: #ff4500;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cloth-in span i {
+    font-size: 22px;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .cloth-in span a:hover {
+    background-color: #e63e00;
+  }
+  
+  .cloth-in span i:hover {
+    color: #ff4500;
+  }
+  
