@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Profile</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --primary-color: #FF6B00;
+      --bg-light: #F4F6F8;
+      --bg-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --text-dark: #333333;
+      --text-muted: #6B7280;
+      --radius: 8px;
+      --spacing: 16px;
+      --font: 'Poppins', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font);
+      color: var(--text-dark);
+      background: var(--bg-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-white);
+      padding: var(--spacing);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .navbar .brand {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+    .navbar .menu {
+      position: relative;
+    }
+    .navbar .menu-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .navbar .dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-height: 240px;
+      overflow-y: auto;
+      display: none;
+      z-index: 10;
+    }
+    .navbar .dropdown li {
+      padding: 8px 16px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .navbar .dropdown li:hover {
+      background: var(--bg-light);
+      color: var(--primary-color);
+    }
+    .menu-btn:focus + .dropdown,
+    .dropdown:hover {
+      display: block;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 32px;
+    }
+    .header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Form Styles */
+    .general-info h3 {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-align: center;
+    }
+    .general-info form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      color: var(--text-muted);
+    }
+    .form-group input[type="file"],
+    .form-group input[type="tel"] {
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      width: 100%;
+    }
+    .btn-primary {
+      padding: 10px 24px;
+      background: var(--primary-color);
+      color: var(--bg-white);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+      grid-column: span 2;
+      justify-self: center;
+    }
+    .btn-primary:hover {
+      background: #e65a00;
+    }
+
+    /* Responsive Fix for Photo & Phone fields */
+    @media (max-width: 480px) {
+      .general-info form {
+        grid-template-columns: 1fr;
+      }
+      .btn-primary {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">The Hanger</div>
+    <div class="menu">
+      <button class="menu-btn" aria-haspopup="true" aria-expanded="false">
+        Menu ▼
+      </button>
+      <ul class="dropdown" role="menu">
+        <a href="/users/profile"><li> Profile</li></a>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main">
+    <header class="header">
+      <h1>Create Your Profile</h1>
+      <p>Upload a photo and enter your phone number to get started.</p>
+    </header>
+
+    <div class="card general-info">
+      <h3>General Information</h3>
+      <form
+        id="infoForm"
+        enctype="multipart/form-data"
+        method="post"
+        action="/users/profileEdit"
+      >
+        <div class="form-group">
+          <label for="uploadImage">Profile Photo</label>
+          <input
+            type="file"
+            id="uploadImage"
+            name="uploadImage"
+            accept="image/*"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="phonenumber">Phone Number</label>
+          <input
+            type="tel"
+            id="phonenumber"
+            name="phonenumber"
+            placeholder="+965 1234 5678"
+            required
+          />
+        </div>
+        <button type="submit" class="btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

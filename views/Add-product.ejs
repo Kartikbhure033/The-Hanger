@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hanger | Update Product</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #FF6B00;
+      --bg-light: #F4F6F8;
+      --bg-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --text-dark: #333333;
+      --text-muted: #6B7280;
+      --radius: 8px;
+      --spacing: 16px;
+      --font: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-light);
+      padding: 32px;
+      color: var(--text-dark);
+    }
+    .container {
+      max-width: 720px;
+      margin: auto;
+      background: var(--bg-white);
+      padding: 32px;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    h1 {
+      font-size: 1.75rem;
+      color: var(--primary-color);
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+      font-family: var(--font);
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .btn {
+      background: var(--primary-color);
+      color: var(--bg-white);
+      padding: 12px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn:hover {
+      background: #e65a00;
+    }
+    #imagePreview img {
+      max-height: 200px;
+      margin-top: 12px;
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Update Product</h1>
+    <form action="/sell/Add-product" method="post" enctype="multipart/form-data">
+      <label for="productName">Product Name *</label>
+      <input type="text" id="productName" name="productname" value="Slim Fit Denim Jacket" required>
+
+      <div class="grid">
+        <div>
+          <label for="price">Price ($) *</label>
+          <input type="number" id="price" name="price" value="59.99" step="0.01" required>
+        </div>
+        <div>
+          <label for="stock">Stock Quantity *</label>
+          <input type="number" id="stock" name="Stock" value="120" required>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="size">Size *</label>
+          <select id="size" name="Size" required>
+            <option value="">Select Size</option>
+            <option value="S">S</option>
+            <option value="M" selected>M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
+        </div>
+        <div>
+          <label for="color">Color *</label>
+          <input type="text" id="color" name="color" value="Dark Blue" required>
+        </div>
+      </div>
+
+      <label for="category">Category *</label>
+      <input type="text" id="category" name="category" value="Jackets" required>
+
+      <label for="material">Material / Composition *</label>
+      <input type="text" id="material" name="material" value="100% Cotton Blend" required>
+
+      <label for="brand">Brand *</label>
+      <input type="text" id="brand" name="brand" value="The Hanger" required>
+
+      <label for="care">Care Instructions</label>
+      <textarea id="care" name="careInstruction" rows="2">Machine wash cold, tumble dry low</textarea>
+
+      <label for="description">Detailed Description *</label>
+      <textarea id="description" name="Description" rows="4" required>A stylish slim-fit denim jacket with durable stitching and a classic design. Perfect for casual outings and versatile for layering.</textarea>
+
+      <label for="newImage">Upload New Image</label>
+      <input type="file" id="newImage" name="uploadimage" accept="image/*" onchange="previewImage(event)">
+      <div id="imagePreview" style="display: none;">
+        <p class="text-muted">New Image Preview:</p>
+        <img id="preview" alt="Preview">
+      </div>
+
+      <button type="submit" class="btn">Update Product</button>
+    </form>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const input = event.target;
+      const preview = document.getElementById("preview");
+      const previewWrapper = document.getElementById("imagePreview");
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          previewWrapper.style.display = "block";
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+</body>
+</html>

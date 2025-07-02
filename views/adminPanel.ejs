@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --primary-color: #FF6B00;
+      --bg-light: #F4F6F8;
+      --bg-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --text-dark: #333333;
+      --text-muted: #6B7280;
+      --radius: 8px;
+      --spacing: 16px;
+      --font: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      color: var(--text-dark);
+      background: var(--bg-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-white);
+      padding: var(--spacing);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .brand { font-size: 1.25rem; font-weight: 500; }
+    .menu { position: relative; }
+    .menu-btn {
+      background: none; border: none;
+      font-size: 1rem; cursor: pointer;
+      color: var(--text-muted);
+    }
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-height: 240px; overflow-y: auto;
+      display: none; z-index: 10;
+    }
+    .dropdown li {
+      padding: 8px 16px; white-space: nowrap;
+      cursor: pointer; transition: background .2s;
+    }
+    .dropdown li:hover { background: var(--bg-light); color: var(--primary-color); }
+    .menu-btn:focus + .dropdown,
+    .dropdown:hover { display: block; }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: var(--spacing);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing);
+      align-items: start;
+    }
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+    .card p {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    a{
+      color: #FF6B00;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">The Hanger Admin</div>
+    <div class="menu">
+      <button class="menu-btn" aria-haspopup="true" aria-expanded="false">
+        Menu ▼
+      </button>
+      <ul class="dropdown" role="menu">
+        <a href="/"><li>Home</li></a>
+        <a href="/sell/shop"><li>shop</li></a>
+        <a href="/users/profile"><li>profile</li></a>
+        <a href="/sell/Add-products"><li>Add-products</li></a>
+        <a href="/user/logout"><li>Log out</li></a>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main">
+  <a href="/admin/users">
+    <div class="card">
+    <h3>Total Users</h3>
+    <p><%= stats.users %></p>
+  </div>
+  </a>
+  
+ <a href="/admin/all-products">
+   <div class="card">
+    <h3>Total products</h3>
+    <p><%= stats.profiles %></p>
+  </div>
+ </a>
+ <a href="/admin/orders">
+   <div class="card">
+    <h3>orders</h3>
+    <p><%= stats.products %></p>
+  </div>
+ </a>
+  <div class="card">
+    <h3>Revenue</h3>
+    <p><%= stats.revenue %></p>
+  </div>
+  </main>
+</body>
+</html>

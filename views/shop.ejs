@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hanger - Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #FF6B00;
+      --bg-light: #F4F6F8;
+      --bg-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --text-dark: #333333;
+      --text-muted: #6B7280;
+      --radius: 20px;
+      --spacing: 16px;
+      --font: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); color: var(--text-dark); background: var(--bg-light); min-height: 100vh; }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-white);
+      padding: var(--spacing);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+      transition: padding 0.2s;
+    }
+    .brand {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      flex: 1 1 auto;
+      text-align: center;
+      transition: font-size 0.2s;
+    }
+    .nav-search {
+      flex: 2 1 auto;
+      display: flex;
+      justify-content: center;
+      margin: var(--spacing) 0;
+    }
+    .search-wrapper {
+      display: flex;
+      align-items: center;
+      width: 60%;
+      max-width: 300px;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: width 0.2s;
+    }
+    .search-icon {
+      padding: 0 12px;
+      font-size: 1rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: font-size 0.2s, padding 0.2s;
+    }
+    .search-wrapper input {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      outline: none;
+      font-size: 0.95rem;
+      border-radius: 0;
+      transition: padding 0.2s, font-size 0.2s;
+    }
+    .menu {
+      position: relative;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+    .menu-btn { background: none; border: none; font-size: 1rem; cursor: pointer; color: var(--text-muted); }
+    .dropdown { position: absolute; top: calc(100% + 4px); right: 50%; transform: translateX(50%); background: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: none; z-index: 10; }
+    .dropdown li { list-style: none; padding: 8px 16px; cursor: pointer; color: var(--text-dark); transition: background 0.2s; }
+    .dropdown li:hover { background: var(--bg-light); color: var(--primary-color); }
+    .menu-btn:focus + .dropdown,
+    .dropdown:hover { display: block; }
+
+    /* Main Layout */
+    .main-container { padding: 2rem; max-width: 1200px; margin: auto; transition: padding 0.2s; }
+    .filter-sort { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+    .filter-sort label { margin-right: 0.5rem; color: var(--text-muted); }
+    .sort-select { padding: 0.5rem; border-radius: 5px; border: 1px solid var(--border-color); }
+
+    .NewItems { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; transition: gap 0.2s; }
+    .cloth1 { background: var(--bg-white); border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+    .cloth1:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+    .cloth-in img { width: 100%; height: 240px; object-fit: cover; background: #eee; transition: height 0.2s; }
+    .cloth-in { flex: 1; padding: 24px; display: flex; flex-direction: column; transition: padding 0.2s; }
+    .cloth-in .title { font-size: 1rem; font-weight: 600; color: var(--text-dark); text-align: center; margin: 12px 0 8px; transition: font-size 0.2s, margin 0.2s; }
+    .cloth-in .description { font-size: 1.1rem; font-weight: 300; color: var(--text-muted); text-align: center; margin-bottom: 8px; font-style: italic; transition: font-size 0.2s, margin 0.2s; }
+    .cloth-in .price { font-size: 1rem; font-weight: 500; color: var(--primary-color); text-align: center; margin-bottom: 10px; transition: font-size 0.2s, margin 0.2s; }
+    .cloth-in .actions { margin-top: auto; display: flex; justify-content: center; }
+    .cloth-in .actions button { background: var(--primary-color); color: var(--bg-white); padding: 10px 28px; border-radius: calc(var(--radius)/2); font-size: 1rem; font-weight: 600; border: none; cursor: pointer; transition: background 0.3s, padding 0.2s, font-size 0.2s; }
+    .cloth-in .actions button:hover { background: #e63e00; }
+
+    /* Responsive Navbar & Grid */
+    @media (max-width: 768px) {
+      .navbar { padding: 12px; }
+      .main-container { padding: 1.5rem; }
+      .brand { font-size: 1.5rem; }
+      .search-wrapper { width: 80%; max-width: 250px; }
+      .NewItems { grid-template-columns: repeat(2, 1fr); }
+      .cloth-in { padding: 16px; }
+      .cloth-in .title { font-size: 0.9rem; margin: 10px 0 6px; }
+      .cloth-in .description { font-size: 1rem; margin-bottom: 6px; }
+      .cloth-in .price { font-size: 0.9rem; margin-bottom: 6px; }
+      .cloth-in .actions button { padding: 8px 20px; font-size: 0.9rem; }
+      .cloth-in img { height: 200px; }
+    }
+    @media (max-width: 480px) {
+      .navbar { padding: 8px; }
+      .brand { font-size: 1rem; letter-spacing: 1px; }
+      .nav-search { width: 100%; margin: var(--spacing) 0; }
+      .search-wrapper { width: 90%; }
+      .search-icon { font-size: 0.9rem; padding: 0 8px; }
+      .search-wrapper input { padding: 6px 8px; font-size: 0.85rem; }
+      .main-container { padding: 1rem; }
+      .NewItems { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+      .cloth-in { padding: 12px; }
+      .cloth-in .title { font-size: 0.8rem; margin: 6px 0 4px; }
+      .cloth-in .description { font-size: 0.9rem; margin-bottom: 4px; }
+      .cloth-in .price { font-size: 0.8rem; margin-bottom: 4px; }
+      .cloth-in .actions button { padding: 6px 12px; font-size: 0.8rem; }
+      .cloth-in img { height: 160px; }
+    }
+   .cloth-in img {
+  border-radius: var(--radius);
+}
+.nav-search button{
+  background-color: transparent;
+  margin: 0%;
+  padding: 0%;
+  border: none;
+}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">The Hanger</div>
+    <div class="nav-search">
+      <form action="/sell/shop" method="get" class="search-wrapper">
+        <button type="submit" class="search-icon"><i class="fas fa-search search-icon"></i></button>
+        <input type="text" name="search" placeholder="Search products" value="<%= search %>" />
+      </form>
+    </div>
+    <div class="menu">
+      <button class="menu-btn" aria-haspopup="true" aria-expanded="false">Menu ▼</button>
+      <ul class="dropdown" role="menu">
+        <a href="/profile"><li>Profile</li></a>
+        <a href="/my-orders"><li>Orders</li></a>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-container">
+    <div class="filter-sort">
+      <form id="sortForm" action="/sell/shop" method="get">
+        <input type="hidden" name="q" value="<%= typeof q !== 'undefined' ? q : '' %>">
+        <label for="sort-select">Sort by:</label>
+        <select id="sort-select" name="sort" class="sort-select" onchange="document.getElementById('sortForm').submit()">
+         
+          <option value="priceLow" <%= sort === 'priceLow' ? 'selected' : '' %>>Price: Low to High</option>
+          <option value="priceHigh" <%= sort === 'priceHigh' ? 'selected' : '' %>>Price: High to Low</option>
+        </select>
+      </form>
+    </div>
+
+    <div class="NewItems">
+      <% products.forEach(product => { %>
+        <div class="cloth1" onclick="window.location.href='/sell/<%= product._id%>'">
+          <div class="cloth-in">
+            <img src="<%= product.uploadimage %>" alt="<%= product.productname %>">
+            <p class="title"><%= product.brand %></p>
+            <p class="description"><%= product.productname %></p>
+            <p class="price">₹<%= product.price.toFixed(2) %></p>
+            <div class="actions">
+              <form action="/cart/add/<%= product._id %>" method="post">
+                <button type="submit">Buy</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <nav class="My-nav" id="Home">
+        <div class="innerNav">
+          <button class="nav-toggle" onclick="toggleMenu()">☰ </button>
+
+            <div>
+                <h1>The hanger</h1>
+            </div>
+            <ul>
+                <Li><a href="">Home</a></Li>
+                <Li><a href="#sales">Sales</a></Li>
+                <Li><a href="#Subscription">Subscription</a></Li>
+                <Li><a href="#cloth">cloths</a></Li>
+            </ul>
+            
+
+            <div class="buttons">
+               
+                      <% if (locals.user) { %>
+    <!-- logged in: show Dashboard button -->
+    <a href="/users/profile">Dashboard</a>
+  <% } else { %>
+    <!-- not logged in: show Sign In / Log In -->
+    <a href="/user/signin">Sign Up</a>
+    <a href="/user/login">Log In</a>
+  <% } %>
+            </div>
+            
+        </div>
+
+
+        <div class="middleBody">
+          <p>"Too many clothes"</p>
+            <h1>Discover your favrite pieces</h1>
+            <a href="/sell/shop"><button>Shop now</button></a>
+        </div>
+    </nav>
+
+
+
+
+
+    <section class="about-section">
+  <div class="container">
+   
+
+    <div class="about">
+      <div class="about-header">
+        <h2>Who We Are</h2>
+      </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            Welcome to <strong>Your Company Name</strong>! We’re a small team of passionate developers
+            and designers who love building beautiful, user-friendly web experiences. Since 2020,
+            our mission has been to help businesses grow online with clean code, thoughtful
+            UX, and pixel-perfect styling.
+          </p>
+          <p>
+            From e-commerce storefronts to custom admin dashboards, every project is an opportunity
+            to learn, innovate, and deliver top-notch results. Thank you for stopping by!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="weekend" id="sales">
+   <div class="weekend1">
+
+   </div>
+   <div class="weekend2">
+        <div class="items">
+            <h2>Only on This Weekend</h2>
+            <h1>Get 15% Discount</h1>
+            
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. A, odio itaque. Libero, id exercitationem dolorum alias molestias aspernatur enim magni?</p>
+            <a href="/sell/shop"><button>Shop now</button></a>
+        </div>
+        
+   </div>
+</div>
+
+
+    <div class="title-catogory" id="cloth">
+        <h1>shop By category</h1>
+    </div>
+
+    <div class="container">
+        <div class="column col1">
+           <a href="/sell/shop">
+             <div class="overlay">
+                Men's
+            </div>
+           </a>
+        </div>
+        <div class="column col2">
+            <a href="/sell/shop">
+                <div class="overlay">
+                Woman
+            </div>
+            </a>
+        </div>
+        <div class="column col3">
+            <a href="/sell/shop">
+                <div class="overlay">
+                Kids
+            </div>
+            </a>
+        </div>
+    </div>
+
+
+
+
+    <div class="contact" id="Subscription">
+        <div class="text">
+            <p>Stay connected</p>
+        </div>
+        <div class="Subscribe">
+            <input type="email" placeholder="Email">
+            <a href="">Subscribe</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footerright">
+            <a href="Home"><p>Home</p></a>
+            <a href="sales"><p>Sales</p></a>
+            <a href="Subscription"><p>Subscriptions</p></a>
+            <a href="cloth"><p>Cloth</p></a>
+        </div>
+       
+    </footer>
+
+    <div class="Made-By">
+        <p>Powered And Secured By Kartik Bhure</p>
+    </div>
+    <script>
+  function toggleMenu() {
+    const navList = document.querySelector('.My-nav ul');
+    navList.classList.toggle('active');
+  }
+</script>
+
+</body>
+</html>

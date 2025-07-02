@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #FF6B00;
+      --bg-light: #F4F6F8;
+      --bg-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --text-dark: #333333;
+      --text-muted: #6B7280;
+      --radius: 8px;
+      --spacing: 16px;
+      --font: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      color: var(--text-dark);
+      background: var(--bg-light);
+      min-height: 100vh;
+    }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-white);
+      padding: var(--spacing);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .navbar .brand {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+    .navbar .menu {
+      position: relative;
+    }
+    .navbar .menu-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .navbar .dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-height: 240px;
+      overflow-y: auto;
+      display: none;
+      z-index: 10;
+    }
+    .navbar .dropdown li {
+      padding: 8px 16px;
+      white-space: nowrap;
+      cursor: pointer;
+      color: var(--text-dark);
+      transition: background 0.2s;
+    }
+    .navbar .dropdown li:hover {
+      background: var(--bg-light);
+      color: var(--primary-color);
+    }
+    .menu-btn:focus + .dropdown,
+    .dropdown:hover {
+      display: block;
+    }
+    /* Main Content */
+    .main {
+      padding: 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .header {
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .profile-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+    }
+    /* Avatar Card */
+    .avatar-card {
+      text-align: center;
+    }
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+    .avatar-card h3 {
+      margin-bottom: 4px;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    .avatar-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    /* General Information (static) */
+    .general-info h3 {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    .info-item {
+      display: flex;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .info-item .label {
+      width: 110px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .btn-edit {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: var(--primary-color);
+      color: var(--bg-white);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    .btn-edit:hover {
+      background: #e65a00;
+    }
+    /* Security Section */
+    .security h3 {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    .security-item {
+      display: flex;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .security-item .label {
+      width: 110px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .btn-secondary {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 24px;
+      border: 1px solid var(--primary-color);
+      background: var(--bg-white);
+      color: var(--primary-color);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover {
+      background: var(--primary-color);
+      color: var(--bg-white);
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main {
+        padding: 16px;
+      }
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      .header p {
+        font-size: 0.9rem;
+      }
+      .profile-row {
+        grid-template-columns: 1fr;
+      }
+      .avatar {
+        width: 80px;
+        height: 80px;
+      }
+      .navbar .brand {
+        font-size: 1rem;
+      }
+      .navbar .menu-btn {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">The Hanger</div>
+    <div class="menu">
+      <button class="menu-btn" aria-haspopup="true" aria-expanded="false">Menu ▼</button>
+      <ul class="dropdown" role="menu">
+        <a href="/"><li>Home</li></a>
+        <a href="/users/my-orders"><li>Orders</li></a>
+        <a href="/sell/shop"><li>Shop</li></a>
+        <a href="/user/logout"><li>Sign out</li></a>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main">
+    <header class="header">
+      <h1><%= user.fullname %></h1>
+      <p>Manage your details, view your tier status and change your phone number.</p>
+    </header>
+
+    <div class="profile-row">
+      <div class="card avatar-card">
+        <img src="<%- profile.uploadImage %>" alt="Avatar" class="avatar">
+        <h3><%= user.fullname %></h3>
+        <p><%- profile.phonenumber %></p>
+      </div>
+      <div class="card general-info">
+        <h3>General information</h3>
+        <div class="info-item"><span class="label">First name:</span><span> <%= user.fullname %></span></div>
+        <div class="info-item"><span class="label">Email:</span><span> <%= user.email %></span></div>
+      </div>
+    </div>
+
+    <div class="card security">
+      <h3>Security</h3>
+      <div class="security-item"><span class="label">Phone number:</span><span> <%- profile.phonenumber %></span></div>
+      <a href="/users/profileEdit"><button class="btn-secondary">Add phone number and Image</button></a>
+    </div>
+  </main>
+</body>
+</html>

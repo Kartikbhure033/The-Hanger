@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In</title>
+  <style>
+  /* Reset & box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page & container */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff3e0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signin-container {
+  width: 350px;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Heading */
+.signin-container h2 {
+  font-size: 1.75rem;
+  color: #ff6f00;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Form fields */
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group a{
+  color: #e65100;
+  text-decoration: underline;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #333333;
+}
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ffb74d;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus {
+  border-color: #ff6f00;
+}
+
+/* Primary Sign-In button */
+.signin-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #ff6f00;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.signin-btn:hover {
+  background-color: #e65100;
+}
+
+/* Google Button as <a> */
+.signin-container .google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  color: #444444;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.signin-container .google-btn:hover {
+  background-color: #f5f5f5;
+  border-color: #cccccc;
+}
+.signin-container .google-btn img {
+  height: 30px;
+  margin-right: 0.75rem;
+}
+
+  </style>
+</head>
+<body>
+  <div class="signin-container">
+    <h2>Sign In</h2>
+
+    <form action="/user/signin" method="post">
+      <div class="form-group">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Your full name" required name="fullname" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required  name="email"/>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required name="password"/>
+    </div>
+    <div class="form-group">
+      <label for="password">Already have an account?<a href="/user/login">login</a></label>
+    </div>
+
+
+    <button class="signin-btn" type="submit">Sign In</button>
+    </form>
+
+   <a class="google-btn" href="/auth/google">
+  <img src="/vecteezy_google-logo-transparent-png_42165816-removebg-preview.png" alt="Google Logo" />
+  Continue with Google
+</a>
+  </div>
+</body>
+</html>

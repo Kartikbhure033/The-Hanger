@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart</title>
+  <style>
+    /* Reset base styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 0 1rem;
+    }
+    a { color: #007bff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .header { background-color: #111; color: white; padding: 1rem; text-align: center; }
+    .header .logo a { font-size: 1.5rem; font-weight: bold; text-transform: uppercase; color: #fff; }
+
+    /* Cart Container */
+    .cart-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .cart-container h1 { margin-bottom: 1.5rem; font-size: 2rem; }
+
+    /* Cart Table */
+    .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+    .cart-table th, .cart-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+    }
+    .cart-table th { background-color: #f0f0f0; }
+    .cart-thumb {
+      width: 60px; height: 60px;
+      object-fit: cover; margin-right: 1rem;
+      border-radius: 8px;
+    }
+
+    /* Forms & Buttons */
+    input[type="number"] {
+      width: 60px; padding: 0.3rem;
+      border: 1px solid #ccc; border-radius: 6px;
+    }
+    button, .checkout-button {
+      background-color: orangered; border: none;
+      color: white; padding: 0.4rem 0.8rem;
+      border-radius: 6px; cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    button:hover, .checkout-button:hover { background-color: darkorange; }
+
+    /* Cart Summary */
+    .cart-summary { text-align: right; }
+    .cart-summary h2 { margin-bottom: 1rem; }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .cart-table th, .cart-table td { padding: 0.6rem; }
+      .cart-thumb { width: 50px; height: 50px; }
+      .cart-container { padding: 1rem; }
+    }
+
+    /* Mobile: switch table to block cards */
+    @media (max-width: 480px) {
+      .cart-table { display: block; }
+      .cart-table thead { display: none; }
+      .cart-table tr { display: block; margin-bottom: 1rem; border-bottom: none; box-shadow: 0 1px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+      .cart-table td {
+        display: flex; justify-content: space-between;
+        padding: 0.8rem 1rem;
+        border: none; border-bottom: 1px solid #eee;
+      }
+      .cart-table td:last-child { border-bottom: none; }
+      .cart-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        flex: 1;
+      }
+      .cart-table td span, .cart-table td form { flex: 2; text-align: right; }
+      .cart-summary { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo"><a href="/">the hanger</a></div>
+  </header>
+
+  <main class="cart-container">
+    <h1>Your Shopping Cart</h1>
+    <% if (items.length === 0) { %>
+      <p>Your cart is empty. <a href="/sell/shop">Continue shopping</a>.</p>
+    <% } else { %>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.forEach(item => { %>
+            <tr>
+              <td data-label="Product">
+                <img src="<%= item.product.uploadimage %>" alt="<%= item.product.productname %>" class="cart-thumb" />
+                <span><%= item.product.productname %></span>
+              </td>
+              <td data-label="Price"><span>$<%= item.product.price.toFixed(2) %></span></td>
+              <td data-label="Quantity">
+                <form action="/cart/update/<%= item._id %>" method="POST">
+                  <input type="number" name="quantity" value="<%= item.quantity %>" min="1" />
+                  <button type="submit">Update</button>
+                </form>
+              </td>
+              <td data-label="Subtotal"><span>$<%= (item.product.price * item.quantity).toFixed(2) %></span></td>
+              <td data-label="Action">
+                <form action="/cart/remove/<%= item._id %>" method="POST" onsubmit="return confirm('Remove this item?');">
+                  <button type="submit">Remove</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div class="cart-summary">
+        <h2>Total: $<%= total.toFixed(2) %></h2>
+        <a href="/checkout/Address" class="checkout-button">Proceed to Checkout</a>
+      </div>
+    <% } %>
+  </main>
+</body>
+</html>

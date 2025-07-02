@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Address Management</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    :root {
+      --primary-color: #FF6B00;
+      --primary-light: #ff8c3a;
+      --secondary-color: #4A6572;
+      --bg-light: #F4F6F8;
+      --bg-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --text-dark: #333333;
+      --text-muted: #6B7280;
+      --success: #4CAF50;
+      --radius: 8px;
+      --spacing: 16px;
+      --font: 'Poppins', sans-serif;
+      --shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font);
+      background: var(--bg-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-white);
+      padding: var(--spacing);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar .brand {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .navbar .brand i {
+      color: var(--primary-color);
+    }
+    .navbar .menu {
+      position: relative;
+    }
+    .navbar .menu-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .navbar .dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-height: 240px;
+      overflow-y: auto;
+      display: none;
+      z-index: 10;
+      min-width: 180px;
+    }
+    .navbar .dropdown li {
+      padding: 10px 16px;
+      white-space: nowrap;
+      cursor: pointer;
+      color: var(--text-dark);
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    .navbar .dropdown li i {
+      width: 20px;
+      color: var(--text-muted);
+    }
+    .navbar .dropdown li:hover {
+      background: var(--bg-light);
+      color: var(--primary-color);
+    }
+    .menu-btn:focus + .dropdown,
+    .dropdown:hover {
+      display: block;
+    }
+
+    /* Main Content */
+    .main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: calc(var(--spacing) * 2);
+    }
+    .header {
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: var(--secondary-color);
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Current Addresses Section */
+    .current-addresses {
+      margin-bottom: 32px;
+    }
+    .current-addresses h2 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .address-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing);
+    }
+    .address-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+      box-shadow: var(--shadow);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .address-card:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .address-card .default-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--primary-light);
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .address-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+    .address-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .address-card .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .address-card .btn-action {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+    .address-card .btn-action:hover {
+      color: #e65a00;
+    }
+    .address-card .btn-action.edit i {
+      color: var(--secondary-color);
+    }
+    .address-card .btn-action.delete i {
+      color: #f44336;
+    }
+
+    /* Address Form */
+    .address-form {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+      box-shadow: var(--shadow);
+      margin-bottom: 32px;
+    }
+    .address-form form {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--spacing);
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      margin-bottom: 4px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group select {
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-family: var(--font);
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+    }
+    .form-buttons {
+      grid-column: span 3;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: var(--spacing);
+    }
+    .btn-submit {
+      padding: 12px 28px;
+      background: var(--primary-color);
+      color: var(--bg-white);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-submit:hover {
+      background: #e65a00;
+      transform: translateY(-2px);
+    }
+    .btn-pay {
+      padding: 12px 28px;
+      background: var(--success);
+      color: var(--bg-white);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-pay:hover {
+      background: orangered;
+      transform: translateY(-2px);
+    }
+
+    /* Empty state */
+    .empty-state {
+      background: var(--bg-white);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius);
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--border-color);
+      margin-bottom: 16px;
+    }
+    .empty-state h3 {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      color: var(--text-muted);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .address-form form {
+        grid-template-columns: 1fr;
+      }
+      .form-buttons {
+        grid-column: span 1;
+        flex-direction: column;
+      }
+      .form-buttons button {
+        width: 100%;
+      }
+      .address-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+   <nav class="navbar">
+    <div class="brand">
+      <span>The Hanger</span>
+    </div>
+    <div class="menu">
+      <button class="menu-btn">Menu <i class="fas fa-caret-down"></i></button>
+      <ul class="dropdown">
+       <a href="/profile"> <li><i class="fas fa-user"></i> User Profile</li></a>
+        
+        
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main">
+    <!-- Current Addresses Section -->
+   
+    <!-- Add New Address Section -->
+    <header class="header">
+      <h1><i class="fas fa-plus-circle"></i> Add New Address</h1>
+      <p>Enter a new shipping address for your orders.</p>
+    </header>
+
+    <div class="address-form">
+      <form id="addressForm">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="John Doe"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="street">Street Address</label>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            placeholder="123 Main St"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            placeholder="Springfield"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="state">State/Province</label>
+          <input
+            type="text"
+            id="state"
+            name="state"
+            placeholder="State"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="zip">Postal Code</label>
+          <input
+            type="text"
+            id="zip"
+            name="zip"
+            placeholder="12345"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select Country</option>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>India</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>
+            <input
+              type="checkbox"
+              id="defaultAddress"
+              name="defaultAddress"
+            />
+            Set as default address
+          </label>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" id="rzp-button" class="btn-pay">
+            <i class="fas fa-credit-card"></i> Pay Now
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Razorpay Checkout script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    (function() {
+      const rzpb = document.getElementById('rzp-button');
+      const addressForm = document.getElementById('addressForm');
+
+      rzpb.onclick = async (e) => {
+        e.preventDefault();
+
+        // STEP A: Read all address inputs
+        const fullNameInput = document.getElementById('fullName').value.trim();
+        const streetInput   = document.getElementById('street').value.trim();
+        const cityInput     = document.getElementById('city').value.trim();
+        const stateInput    = document.getElementById('state').value.trim();
+        const zipInput      = document.getElementById('zip').value.trim();
+        const countryInput  = document.getElementById('country').value;
+        const defaultChk    = document.getElementById('defaultAddress').checked;
+
+        if (!fullNameInput || !streetInput || !cityInput || !stateInput || !zipInput || !countryInput) {
+          return alert('🚫 Please fill in all address fields before paying.');
+        }
+
+        // STEP B: Create a Razorpay order on the server
+        let order;
+        try {
+          const orderRes = await fetch('/payment/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+          });
+          if (!orderRes.ok) throw new Error('Order creation failed');
+          order = await orderRes.json();
+        } catch (err) {
+          console.error('Error creating order:', err);
+          return alert('🚫 Unable to create order. Please try again.');
+        }
+
+        // STEP C: Configure Razorpay checkout
+        const options = {
+          key: '<%= process.env.RAZORPAY_KEY_ID %>',
+          amount:   order.amount,
+          currency: order.currency,
+          name: 'The Hanger E-Shop',
+          description: 'Order Payment',
+          order_id: order.id,
+
+          handler: async function(response) {
+            // STEP D: Merge payment fields + address fields
+            const payload = {
+              razorpay_order_id:   response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature:  response.razorpay_signature,
+              amount:   order.amount,
+              currency: order.currency,
+
+              fullName:       fullNameInput,
+              street:         streetInput,
+              city:           cityInput,
+              state:          stateInput,
+              zip:            zipInput,
+              country:        countryInput,
+              defaultAddress: defaultChk
+            };
+
+            let verifyJson;
+            try {
+              const verifyRes = await fetch('/payment/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              verifyJson = await verifyRes.json();
+            } catch (err) {
+              console.error('Error verifying payment:', err);
+              return alert('⚠️ Payment was successful but verification request failed. Contact support.');
+            }
+
+            // STEP E: Handle the backend’s response
+            if (verifyJson.status === 'success') {
+              alert('✅ Payment successful and address saved.');
+              window.location.href = '/sell/shop';
+            } else {
+              alert('❌ Verification failed: ' + verifyJson.message);
+            }
+          },
+
+          prefill: {
+            name:  '<%= user.fullName %>',
+            email: '<%= user.email %>'
+          },
+          theme: { color: '#FF6B00' }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (errorData) {
+          alert('❌ Payment failed: ' + errorData.error.description);
+        });
+        rzp.open();
+      };
+    })();
+  </script>
+
+
+</body>
+</html>
